@@ -1,4 +1,4 @@
-package bg.ers.app.grid;
+package bg.ers.game_of_life.model;
 
 public class Grid {
 	
@@ -9,24 +9,23 @@ public class Grid {
 	private int height;
 	private boolean[][] gridHolder;
 	private byte[][] neighboursHolder;
-	private char[] gridRow;
 	
 	public Grid(int width, int height) {
 		if (width < 3 || height < 3) {
-			throw new IllegalArgumentException("x and y must be >= 3");
+			throw new IllegalArgumentException("width and height must be >= 3");
 		}
 		this.width = width;
 		this.height = height;
 		this.gridHolder = new boolean[width][height];
 		this.neighboursHolder = new byte[width + 2][height + 2];
-		this.gridRow = new char[width];
 	}
 
-	private void remapGrid() {	
+	private void remapGrid() {
 		calcNeighboursCount();
+		char[] gridRow = new char[height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				setDeadOrAlive(x, y);
+				setDeadOrAlive(x, y, gridRow);
 				neighboursHolder[x + 1][y + 1] = 0;
 			}
 			System.out.println(gridRow);
@@ -34,22 +33,20 @@ public class Grid {
 		System.out.println("\n");
 	}
 	
-	private void setDeadOrAlive(int x, int y) {
-		int currentCount = neighboursHolder[x + 1][y + 1];
-		if (gridHolder[x][y]) {
-			if (currentCount < 2 || currentCount > 3) {
-				gridHolder[x][y] = false;
-				gridRow[y] = DEAD_CELL;
-			} else {
-				gridRow[y] = ALIVE_CELL;
-			}
-		} else {
-			if (currentCount == 3) {
+	private void setDeadOrAlive(int x, int y, char[] gridRow) {
+		switch(neighboursHolder[x + 1][y + 1]) {
+			case 2:
+				if (!gridHolder[x][y]) {
+					gridRow[y] = DEAD_CELL;
+					break;
+				}
+			case 3:
 				gridHolder[x][y] = true;
 				gridRow[y] = ALIVE_CELL;
-			} else {
+				break;
+			default:	
+				gridHolder[x][y] = false;
 				gridRow[y] = DEAD_CELL;
-			}
 		}
 	}
 	
