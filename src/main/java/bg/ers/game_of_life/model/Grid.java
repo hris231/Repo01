@@ -22,31 +22,30 @@ public class Grid {
 
 	private void remapGrid() {
 		calcNeighboursCount();
-		char[] gridRow = new char[height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				setDeadOrAlive(x, y, gridRow);
+				setDeadOrAlive(x, y);
 				neighboursHolder[x + 1][y + 1] = 0;
 			}
-			System.out.println(gridRow);
+			System.out.println();
 		}
 		System.out.println("\n");
 	}
 	
-	private void setDeadOrAlive(int x, int y, char[] gridRow) {
+	private void setDeadOrAlive(int x, int y) {
 		switch(neighboursHolder[x + 1][y + 1]) {
 			case 2:
 				if (!gridHolder[x][y]) {
-					gridRow[y] = DEAD_CELL;
+					System.out.print(DEAD_CELL);
 					break;
 				}
 			case 3:
 				gridHolder[x][y] = true;
-				gridRow[y] = ALIVE_CELL;
+				System.out.print(ALIVE_CELL);
 				break;
 			default:	
 				gridHolder[x][y] = false;
-				gridRow[y] = DEAD_CELL;
+				System.out.print(DEAD_CELL);
 		}
 	}
 	
