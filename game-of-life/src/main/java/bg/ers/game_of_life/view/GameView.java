@@ -43,8 +43,8 @@ public class GameView {
 	public void startGame() {
 		System.out.println("Welcome to Game of Life.");
 		Scanner sc = new Scanner(System.in);
-		String gridInputMsg = "Input the desired grid size (width and height).";
-		String cellInputMsg = "Input x and y of the cell (press \"N\" to terminate): ";
+		String gridInputMsg = "Input the width followed by space(\" \") and height of the grid.";
+		String cellInputMsg = "Input x followed by space(\" \") and y of the cell (input \"N or n\" to terminate): ";
 		BiConsumer<Integer, Integer> createGrid = (x, y) -> gameGrid = new Grid(x, y);
 		BiConsumer<Integer, Integer> setGridCell = (x, y) -> gameGrid.setAt(x, y);
 		readUserInput(gridInputMsg, INPUT_OK, sc, createGrid);
