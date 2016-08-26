@@ -10,7 +10,7 @@
 	
 	<properties>
 		<project.version>1.0-SNAPSHOT</project.version>
-		<junit-version>3.8.1</junit-version>
+		<junit-version>4.12</junit-version>
 	</properties>
 	
 	<build>
