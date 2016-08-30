@@ -28,7 +28,8 @@ public class GameView {
 				func.accept(x, y);
 				returnCode = INPUT_OK;
 			} catch(NumberFormatException e) {	
-				if (props[0].toUpperCase().equals("N")) {
+				if (inputCode == INPUT_TERMINATE &&
+					props[0].toUpperCase().equals("N")) {
 					return;
 				}
 				System.out.println("Wrong input.");
