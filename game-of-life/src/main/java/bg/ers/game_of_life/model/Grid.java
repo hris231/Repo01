@@ -2,9 +2,6 @@ package bg.ers.game_of_life.model;
 
 public class Grid {
 	
-	private static final char ALIVE_CELL = '+';
-	private static final char DEAD_CELL = '-';
-	
 	private int width;
 	private int height;
 	private boolean[][] gridHolder;
@@ -19,33 +16,40 @@ public class Grid {
 		this.gridHolder = new boolean[width][height];
 		this.neighboursHolder = new byte[width + 2][height + 2];
 	}
+	
+	public Grid(boolean[][] grid) {
+		this.height = grid.length;
+		this.width = grid[0].length;
+		gridHolder = grid;
+		this.neighboursHolder = new byte[width + 2][height + 2];
+	}
 
-	private void remapGrid() {
+	public void calcNewGeneration(AbstractView view) {
 		calcNeighboursCount();
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				setDeadOrAlive(x, y);
+				boolean newState = setDeadOrAlive(x, y);
+				view.setState(x, y, newState);
 				neighboursHolder[x + 1][y + 1] = 0;
 			}
-			System.out.println();
 		}
-		System.out.println("\n");
 	}
 	
-	private void setDeadOrAlive(int x, int y) {
+	private boolean setDeadOrAlive(int x, int y) {
 		switch(neighboursHolder[x + 1][y + 1]) {
 			case 2:
 				if (!gridHolder[x][y]) {
-					System.out.print(DEAD_CELL);
-					break;
+					//System.out.print(DEAD_CELL);
+					return false;
 				}
 			case 3:
 				gridHolder[x][y] = true;
-				System.out.print(ALIVE_CELL);
-				break;
+				//System.out.print(ALIVE_CELL);
+				return true;
 			default:	
 				gridHolder[x][y] = false;
-				System.out.print(DEAD_CELL);
+				//System.out.print(DEAD_CELL);
+				return false;
 		}
 	}
 	
@@ -68,21 +72,30 @@ public class Grid {
 		}
 	}
 	
-	public void startGame() {
-		while (true) {
-			remapGrid();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public void setAt(int x, int y) {
+	public void setAt(int x, int y, boolean state) {
 		if (x < 0 || x > width || y < 0 || y > height) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		gridHolder[x][y] = true;
+		gridHolder[x][y] = state;
 	}
+	
+	public boolean at(int x, int y) {
+		if (x < 0 || x > width || y < 0 || y > height) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		return gridHolder[x][y];
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public boolean[][] getGridHolder() {
+		return gridHolder;
+	}
+
 }
