@@ -1,12 +1,12 @@
 package bg.ers.game_of_life;
 
-import bg.ers.game_of_life.view.GameView;
+import bg.ers.game_of_life.view.ConsoleView;
 
 public class GameOfLife {
 	
     public static void main(String[] args) {
 		try {
-			GameView gv = new GameView();
+			ConsoleView gv = new ConsoleView();
 			gv.startGame();
 		} catch (Exception e) {
 			e.printStackTrace();
