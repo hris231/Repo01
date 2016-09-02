@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +31,13 @@ public class SwingFactory {
 		btn.setPreferredSize(new Dimension(100, 25));
 		setSize(btn, ComponentSize.BUTTON, 150, 25);
 		centerAlingment(btn);
+		panel.add(btn);
+		return btn;
+	}
+	
+	public static JButton createButton(String name, JPanel panel, ActionListener actionListener) {
+		JButton btn = new JButton(name);
+		btn.addActionListener(actionListener);
 		panel.add(btn);
 		return btn;
 	}

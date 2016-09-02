@@ -20,7 +20,7 @@ public class Grid {
 	public Grid(boolean[][] grid) {
 		this.height = grid.length;
 		this.width = grid[0].length;
-		gridHolder = grid;
+		this.gridHolder = grid;
 		this.neighboursHolder = new byte[width + 2][height + 2];
 	}
 

@@ -1,6 +1,6 @@
 package bg.ers.game_of_life;
 
-import bg.ers.game_of_life.view.ConsoleView;
+import bg.ers.game_of_life.view.console.ConsoleView;
 
 public class GameOfLife {
 	

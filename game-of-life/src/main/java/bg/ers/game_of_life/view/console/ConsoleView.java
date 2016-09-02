@@ -1,4 +1,4 @@
-package bg.ers.game_of_life.view;
+package bg.ers.game_of_life.view.console;
 
 import java.util.Scanner;
 import java.util.function.BiConsumer;

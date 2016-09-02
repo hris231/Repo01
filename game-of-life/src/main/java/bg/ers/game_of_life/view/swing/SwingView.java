@@ -1,4 +1,4 @@
-package bg.ers.game_of_life.view;
+package bg.ers.game_of_life.view.swing;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class SwingView extends JPanel implements AbstractView {
 	private 	JPanel 			gridPanel;
 	private		JPanel			buttonPanel;
 	
-	private 	JButton[][] 	buttons;
+	private 	JButton[][] 	gridButtons;
 	private 	JButton 		startBtn;
 	private 	JButton 		stopButton;
 	private		JButton			clearGridButton;
@@ -41,9 +41,9 @@ public class SwingView extends JPanel implements AbstractView {
 	private 	JButton 		loadButton;
 	
 	public SwingView() {
-		grid = new Grid(MAX_SIZE, MAX_SIZE);
-		buttons = new JButton[MAX_SIZE][MAX_SIZE];
-		fileManager = FileManager.getInstance();
+		this.grid = new Grid(MAX_SIZE, MAX_SIZE);
+		this.gridButtons = new JButton[MAX_SIZE][MAX_SIZE];
+		this.fileManager = FileManager.getInstance();
 		this.state = IDLE;
 		init();
 	}
@@ -55,46 +55,33 @@ public class SwingView extends JPanel implements AbstractView {
 		gridPanel = SwingFactory.createPanel(this, LayoutType.GRID, MAX_SIZE, MAX_SIZE);
 		buttonPanel = SwingFactory.createPanel(this, LayoutType.FLOW);
 		
-		startBtn = new JButton("Start");
-		startBtn.addActionListener(new ActionListener() {
+		startBtn = SwingFactory.createButton("Start", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = GAME_STARTED;
 				runGame();
 			}
-			
 		});
 		
-		buttonPanel.add(startBtn);
-		
-		stopButton = new JButton("Stop");
-		stopButton.addActionListener(new ActionListener() {
+		stopButton = SwingFactory.createButton("Stop", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = IDLE;
 			}
-			
 		});
 		
-		buttonPanel.add(stopButton);
-		
-		clearGridButton = new JButton("Clear");
-		clearGridButton.addActionListener(new ActionListener() {
+		clearGridButton = SwingFactory.createButton("Clear", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = IDLE;
 				updateGrid(new boolean[MAX_SIZE][MAX_SIZE]);
 			}
-			
 		});
 		
-		buttonPanel.add(clearGridButton);
-		
-		saveButton = new JButton("Save");
-		saveButton.addActionListener(new ActionListener() {
+		saveButton = SwingFactory.createButton("Save", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -103,13 +90,9 @@ public class SwingView extends JPanel implements AbstractView {
 				}
 				fileManager.save("Record01", grid.getGridHolder());
 			}
-			
 		});
 		
-		buttonPanel.add(saveButton);
-		
-		loadButton = new JButton("Load");
-		loadButton.addActionListener(new ActionListener() {
+		loadButton = SwingFactory.createButton("Load", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,10 +102,7 @@ public class SwingView extends JPanel implements AbstractView {
 				boolean[][] loadedGrid = (boolean[][]) fileManager.load("Record01");
 				updateGrid(loadedGrid);
 			}
-			
 		});
-		
-		buttonPanel.add(loadButton);
 		
 		drawGrid();
 		
@@ -145,29 +125,18 @@ public class SwingView extends JPanel implements AbstractView {
 		}).start();
 	}
 	
-	private void addNewCell(final int x, final int y) {
-		final JButton gridBtn = new JButton();
-		gridBtn.setBackground(Color.white);
+	private void addNewCell(int x, int y) {
 		
-		gridBtn.addActionListener(new ActionListener() {
+		gridButtons[x][y] = SwingFactory.createButton(null, gridPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state != GAME_STARTED) {
-					boolean isAlive = grid.at(x, y);
-					if (isAlive) {
-						gridBtn.setBackground(Color.white);
-					} else {
-						gridBtn.setBackground(Color.black);
-					}
-					grid.setAt(x, y, !isAlive);
-				}
+				boolean cellState = grid.at(x, y);
+				setState(x, y, !cellState);
+				grid.setAt(x, y, !cellState);
 			}
-			
 		});
-		
-		buttons[x][y] = gridBtn;
-		gridPanel.add(gridBtn);
+		gridButtons[x][y].setBackground(Color.white);
 	}
 	
 	private void drawGrid() {
@@ -190,9 +159,9 @@ public class SwingView extends JPanel implements AbstractView {
 	@Override
 	public void setState(int x, int y, boolean state) {
 		if(state) {
-			buttons[x][y].setBackground(Color.black);
+			gridButtons[x][y].setBackground(Color.black);
 		} else {
-			buttons[x][y].setBackground(Color.white);
+			gridButtons[x][y].setBackground(Color.white);
 		}
 	}
 	
