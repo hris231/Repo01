@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SwingFactory {
@@ -24,6 +25,12 @@ public class SwingFactory {
 		centerAlingment(combo);
 		panel.add(combo);
 		return combo;
+	}
+	
+	public static JLabel createLabel(String name, JPanel panel) {
+		JLabel lbl = new JLabel(name);
+		panel.add(lbl);
+		return lbl;
 	}
 	
 	public static JButton createButton(String name, JPanel panel) {
