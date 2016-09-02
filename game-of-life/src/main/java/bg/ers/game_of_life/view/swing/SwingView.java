@@ -34,8 +34,7 @@ public class SwingView extends JPanel implements AbstractView {
 	private		JPanel			buttonPanel;
 	
 	private 	JButton[][] 	gridButtons;
-	private 	JButton 		startBtn;
-	private 	JButton 		stopBtn;
+	private 	JButton 		startStopBtn;
 	private		JButton			clearGridBtn;
 	private 	JButton 		saveBtn;
 	private 	JButton 		loadBtn;
@@ -55,21 +54,15 @@ public class SwingView extends JPanel implements AbstractView {
 		gridPanel = SwingFactory.createPanel(this, LayoutType.GRID, MAX_SIZE, MAX_SIZE);
 		buttonPanel = SwingFactory.createPanel(this, LayoutType.FLOW);
 		
-		startBtn = SwingFactory.createButton("Start", buttonPanel, new ActionListener() {
+		startStopBtn = SwingFactory.createButton("Start", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				state = GAME_STARTED;
-				transition();
-				runGame();
-			}
-		});
-		
-		stopBtn = SwingFactory.createButton("Stop", buttonPanel, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				state = IDLE;
+				if(state == IDLE) {
+					state = GAME_STARTED;
+				} else {
+					state = IDLE;
+				}
 				transition();
 			}
 		});
@@ -121,8 +114,7 @@ public class SwingView extends JPanel implements AbstractView {
 		}).start();
 	}
 	
-	private void addNewCell(int x, int y) {
-		
+	private void addNewCell(int x, int y) {	
 		gridButtons[x][y] = SwingFactory.createButton(null, gridPanel, new ActionListener() {
 			
 			@Override
@@ -155,17 +147,18 @@ public class SwingView extends JPanel implements AbstractView {
 	private void transition() {
 		switch (this.state) {
 			case IDLE:
+				startStopBtn.setText("Start");
 				buttonsState(true);
 				break;
 			case GAME_STARTED:
+				startStopBtn.setText("Stop");
 				buttonsState(false);
+				runGame();
 				break;
 		}
 	}
 	
 	private void buttonsState(boolean state) {
-		startBtn.setEnabled(state);
-		stopBtn.setEnabled(!state);
 		clearGridBtn.setEnabled(state);
 		loadBtn.setEnabled(state);
 		saveBtn.setEnabled(state);
