@@ -39,16 +39,13 @@ public class Grid {
 		switch(neighboursHolder[x + 1][y + 1]) {
 			case 2:
 				if (!gridHolder[x][y]) {
-					//System.out.print(DEAD_CELL);
 					return false;
 				}
 			case 3:
 				gridHolder[x][y] = true;
-				//System.out.print(ALIVE_CELL);
 				return true;
 			default:	
 				gridHolder[x][y] = false;
-				//System.out.print(DEAD_CELL);
 				return false;
 		}
 	}
@@ -79,7 +76,7 @@ public class Grid {
 		gridHolder[x][y] = state;
 	}
 	
-	public final boolean at(int x, int y) {
+	public boolean at(int x, int y) {
 		if (x < 0 || x > width || y < 0 || y > height) {
 			throw new ArrayIndexOutOfBoundsException();
 		}

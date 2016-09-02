@@ -119,9 +119,11 @@ public class SwingView extends JPanel implements AbstractView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean cellState = grid.at(x, y);
-				setState(x, y, !cellState);
-				grid.setAt(x, y, !cellState);
+				if (state == IDLE) {
+					boolean cellState = grid.at(x, y);
+					setState(x, y, !cellState);
+					grid.setAt(x, y, !cellState);
+				}
 			}
 		});
 		gridButtons[x][y].setBackground(Color.white);
@@ -148,17 +150,17 @@ public class SwingView extends JPanel implements AbstractView {
 		switch (this.state) {
 			case IDLE:
 				startStopBtn.setText("Start");
-				buttonsState(true);
+				setButtonsState(true);
 				break;
 			case GAME_STARTED:
 				startStopBtn.setText("Stop");
-				buttonsState(false);
+				setButtonsState(false);
 				runGame();
 				break;
 		}
 	}
 	
-	private void buttonsState(boolean state) {
+	private void setButtonsState(boolean state) {
 		clearGridBtn.setEnabled(state);
 		loadBtn.setEnabled(state);
 		saveBtn.setEnabled(state);
