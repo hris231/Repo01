@@ -35,10 +35,10 @@ public class SwingView extends JPanel implements AbstractView {
 	
 	private 	JButton[][] 	gridButtons;
 	private 	JButton 		startBtn;
-	private 	JButton 		stopButton;
-	private		JButton			clearGridButton;
-	private 	JButton 		saveButton;
-	private 	JButton 		loadButton;
+	private 	JButton 		stopBtn;
+	private		JButton			clearGridBtn;
+	private 	JButton 		saveBtn;
+	private 	JButton 		loadBtn;
 	
 	public SwingView() {
 		this.grid = new Grid(MAX_SIZE, MAX_SIZE);
@@ -60,19 +60,21 @@ public class SwingView extends JPanel implements AbstractView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = GAME_STARTED;
+				transition(state);
 				runGame();
 			}
 		});
 		
-		stopButton = SwingFactory.createButton("Stop", buttonPanel, new ActionListener() {
+		stopBtn = SwingFactory.createButton("Stop", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = IDLE;
+				transition(state);
 			}
 		});
 		
-		clearGridButton = SwingFactory.createButton("Clear", buttonPanel, new ActionListener() {
+		clearGridBtn = SwingFactory.createButton("Clear", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -81,30 +83,26 @@ public class SwingView extends JPanel implements AbstractView {
 			}
 		});
 		
-		saveButton = SwingFactory.createButton("Save", buttonPanel, new ActionListener() {
+		saveBtn = SwingFactory.createButton("Save", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == GAME_STARTED) {
-					return;
-				}
 				fileManager.save("Record01", grid.getGridHolder());
 			}
 		});
 		
-		loadButton = SwingFactory.createButton("Load", buttonPanel, new ActionListener() {
+		loadBtn = SwingFactory.createButton("Load", buttonPanel, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (state == GAME_STARTED) {
-					return;
-				}
 				boolean[][] loadedGrid = (boolean[][]) fileManager.load("Record01");
 				updateGrid(loadedGrid);
 			}
 		});
 		
 		drawGrid();
+		
+		transition(state);
 		
 		frame.add(this);
 		frame.setSize(GRID_WIDTH, GRID_HEIGHT);
@@ -154,6 +152,25 @@ public class SwingView extends JPanel implements AbstractView {
 				setState(x, y, grid[x][y]);
 			}
 		}
+	}
+	
+	private void transition(int transitionCode) {
+		switch (transitionCode) {
+			case IDLE:
+				buttonsState(true);
+				break;
+			case GAME_STARTED:
+				buttonsState(false);
+				break;
+			}
+	}
+	
+	private void buttonsState(boolean state) {
+		startBtn.setEnabled(state);
+		stopBtn.setEnabled(!state);
+		clearGridBtn.setEnabled(state);
+		loadBtn.setEnabled(state);
+		saveBtn.setEnabled(state);
 	}
 	
 	@Override
