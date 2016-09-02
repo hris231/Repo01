@@ -79,7 +79,7 @@ public class Grid {
 		gridHolder[x][y] = state;
 	}
 	
-	public boolean at(int x, int y) {
+	public final boolean at(int x, int y) {
 		if (x < 0 || x > width || y < 0 || y > height) {
 			throw new ArrayIndexOutOfBoundsException();
 		}

@@ -60,7 +60,7 @@ public class SwingView extends JPanel implements AbstractView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = GAME_STARTED;
-				transition(state);
+				transition();
 				runGame();
 			}
 		});
@@ -70,7 +70,7 @@ public class SwingView extends JPanel implements AbstractView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				state = IDLE;
-				transition(state);
+				transition();
 			}
 		});
 		
@@ -78,7 +78,6 @@ public class SwingView extends JPanel implements AbstractView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				state = IDLE;
 				updateGrid(new boolean[MAX_SIZE][MAX_SIZE]);
 			}
 		});
@@ -101,8 +100,7 @@ public class SwingView extends JPanel implements AbstractView {
 		});
 		
 		drawGrid();
-		
-		transition(state);
+		transition();
 		
 		frame.add(this);
 		frame.setSize(GRID_WIDTH, GRID_HEIGHT);
@@ -154,15 +152,15 @@ public class SwingView extends JPanel implements AbstractView {
 		}
 	}
 	
-	private void transition(int transitionCode) {
-		switch (transitionCode) {
+	private void transition() {
+		switch (this.state) {
 			case IDLE:
 				buttonsState(true);
 				break;
 			case GAME_STARTED:
 				buttonsState(false);
 				break;
-			}
+		}
 	}
 	
 	private void buttonsState(boolean state) {
