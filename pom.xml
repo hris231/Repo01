@@ -2,10 +2,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>bg.ers</groupId>
+	<!-- TODO: usually the name of the master pom is the name of the project thus much more representative -->
 	<artifactId>parent</artifactId>
 	<packaging>pom</packaging>
+	<!-- FIXME: this version here is not correct. think what problems it may cause -->
 	<version>${project.version}</version>
 	<name>parent</name>
+	<!-- TODO: shall not comment the url... -->
 	<url>http://maven.apache.org</url>
 	
 	<properties>
