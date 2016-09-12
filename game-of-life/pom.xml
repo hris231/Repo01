@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>game-of-life</artifactId>
+	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>bg.ers</groupId>
+		<artifactId>GameOfLife</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<!-- TODO: usually the project information is placed in the upper part of the xml. 
+	see some examples from the repository. 
+	(thus in a bigger pom i will not be lost searching for the modules name)
+	
+		Fixed.
+	-->
+
+</project>
