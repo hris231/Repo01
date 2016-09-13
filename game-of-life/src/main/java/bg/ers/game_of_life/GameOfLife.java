@@ -6,7 +6,7 @@ public class GameOfLife {
 	
     public static void main(String[] args) {
 		try {
-			ConsoleView gv = new ConsoleView();
+			ConsoleView gv = new ConsoleView();//
 			gv.startGame();
 		} catch (Exception e) {
 			e.printStackTrace();
