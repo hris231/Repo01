@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>bg.ers</groupId>
 	<!-- TODO: usually the name of the master pom is the name of the project thus much more representative
-		//modified
+		//11111111111111111111111
 		Fixed.
 	-->
 	<artifactId>GameOfLife</artifactId>
